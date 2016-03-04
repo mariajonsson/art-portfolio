@@ -198,7 +198,7 @@ class CCV extends CDatabase {
 	
 	  if (!empty($cvgroup->groupdescription)) {
 
-	  $html .= "<li>{$cvgroup->groupdescription} $editgroup</li>";
+	  $html .= "<p>{$cvgroup->groupdescription} $editgroup</p>";
 	}
 	
 	break;
