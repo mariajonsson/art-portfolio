@@ -31,7 +31,7 @@ class CArtwork extends CDatabase {
  
   public function GetAllWorks() {
   
-  $sql = "SELECT * FROM artwork WHERE public=1 ORDER BY year";
+  $sql = "SELECT * FROM artwork WHERE public=1 ORDER BY year DESC";
   $res = $this->ExecuteSelectQueryAndFetchAll($sql);
   
   $this->works = $res;
@@ -50,7 +50,7 @@ class CArtwork extends CDatabase {
   
   public function GetDrawings() {
   
-  $sql = "SELECT * FROM artwork WHERE public=1 AND (technique='blyerts' OR technique='tuschteckning') ORDER BY year";
+  $sql = "SELECT * FROM artwork WHERE public=1 AND (technique='blyerts' OR technique='tuschteckning') ORDER BY year DESC";
   $res = $this->ExecuteSelectQueryAndFetchAll($sql);
   
   $this->works = $res;
@@ -59,7 +59,7 @@ class CArtwork extends CDatabase {
   
   public function GetPaintings() {
   
-  $sql = "SELECT * FROM artwork WHERE public=1 AND (technique='akvarell' OR technique='olja' OR technique='tuschlavering') ORDER BY year";
+  $sql = "SELECT * FROM artwork WHERE public=1 AND (technique='akvarell' OR technique='olja' OR technique='tuschlavering') ORDER BY year DESC";
   $res = $this->ExecuteSelectQueryAndFetchAll($sql);
   
   $this->works = $res;
@@ -68,7 +68,7 @@ class CArtwork extends CDatabase {
   
     public function GetInstallations() {
   
-  $sql = "SELECT * FROM artwork WHERE public=1 AND (technique='installation') ORDER BY year";
+  $sql = "SELECT * FROM artwork WHERE public=1 AND (technique='installation') ORDER BY year DESC";
   $res = $this->ExecuteSelectQueryAndFetchAll($sql);
   
   $this->works = $res;
