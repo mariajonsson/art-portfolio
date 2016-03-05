@@ -24,7 +24,7 @@ class CArtwork extends CDatabase {
  
  public function WorkMenu() {
  
- $html = "<a href='works.php'>alla</a> <a href='works.php?type=drawing'>teckningar</a> <a href='works.php?type=painting'>målningar</a> <a href='works.php?type=installation'>installation</a>";
+ $html = "<a href='works.php?type=drawing'>Teckningar</a> | <a href='works.php?type=painting'>Målningar</a> | <a href='works.php?type=installation'>Installation</a>";
  return $html;
  }
  
@@ -107,10 +107,9 @@ class CArtwork extends CDatabase {
 
   }
   
-    foreach($this->works as $work) {
-    
+  foreach($this->works as $work) {
       $html .= "<figure><a href='works.php?type=single&id={$work->workid}'><img src='img.php?src=work/{$work->workimage}'></a><figcaption>{$work->worktitle} {$work->year}</figcaption></figure>";
-    }
+  }
 
   return $html;
   }

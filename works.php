@@ -17,7 +17,6 @@ $opal['bodyid'] = 'works';
  
 $opal['main'] = <<<EOD
 $menu
-<h1>Verk</h1>
 $html
 EOD;
  
