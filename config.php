@@ -60,11 +60,11 @@ $opal['title_append'] = ' | mariajonsson.com';
 
 $opal['header'] = <<<EOD
 <img class='sitelogo' src='img.php?src=logo.jpg&height=60' alt='Logo'/>
-<span class='sitetitle'>Maria Jonsson</span>
-<span class='siteslogan'></span>
+<a href="index.php"><span class='sitetitle'>Maria Jonsson</span></a>
+<span class='siteslogan'>Konstnär</span>
 EOD;
 $opal['footer'] = <<<EOD
-<footer><span class='sitefooter'>Copyright (c) Maria Jonsson | <a href='https://github.com/mariajonsson/opal'>Opal på GitHub</a> | <a href='http://validator.w3.org/unicorn/check?ucn_uri=referer&amp;ucn_task=conformance'>Unicorn</a></span></footer>
+<footer><!--span class='sitefooter'><!--Copyright (c) Maria Jonsson><!--/span></footer>
 EOD;
 
 /**
@@ -135,11 +135,11 @@ $opal['navbar'] = array(
   'items' => array(
   
     // This is a menu item
-    'home'  => array(
+   /* 'home'  => array(
       'text'  =>'Start',   
       'url'   =>'index.php',  
       'title' => 'Start'
-    ),
+    ),*/
     
         // This is a menu item
     'works'  => array(
@@ -161,14 +161,21 @@ $opal['navbar'] = array(
       'url'   =>'contact.php',  
       'title' => 'Kontakt'
     ),
+        // This is a menu item
+    'blog'  => array(
+      'text'  =>'Blog',   
+      'url'   =>'blog',  
+      'title' => 'Blogg'
+    ),
+
 
        // This is a menu item
-     'gallery'  => array(
+     /*'gallery'  => array(
       'text'  => 'Gallery',   
       'url'   => 'gallery.php',  
        'title' => 'Gallery demo'
         ),
-      
+      */
      
      
   ),

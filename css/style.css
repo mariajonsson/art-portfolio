@@ -9,9 +9,14 @@ html {
 
 body {
   color: #333;
-  font-family: verdana, helvetica, sans-serif;
+  font-family: Arial, sans-serif;
   font-size: 14px;
   
+}
+
+figure {
+  padding: 0;
+  margin: 0;
 }
 
 a {
@@ -48,7 +53,7 @@ span.discreet, p.discreet {
 
 
 h1, h2, h3, h4 {
-  font-family: Arial, sans-serif;
+  /*font-family: Times, serif;*/
   
 }
 
@@ -83,7 +88,7 @@ section {
 
 .sitetitleslogan {
    display: inline-block;
-    left: 70px;
+    /*left: 70px;*/
     position: relative;
     top: 0px;
     vertical-align: bottom;
@@ -93,12 +98,12 @@ section {
  
 .sitetitle {
   font-size: 3em;
-  font-family: Arial;
-   
+  font-family: Georgia, Times, serif; 
+  color: black;
 }
  
 .siteslogan {
-
+  display: block;
   color: #666;
  
   
@@ -107,7 +112,7 @@ section {
 .sitelogo {
   vertical-align: bottom;
   position: relative;
-  
+  display:none;
   z-index: -1;
   
 }
@@ -128,7 +133,6 @@ section {
  */
 #footer {
   margin-top: 40px;
-  border-top: 1px solid #ccc;
   padding-top: 15px;
   clear:both;
 }
@@ -148,8 +152,7 @@ div#navbar {
   width: 100%;
   font-size:1.3em;
   margin-top: 15px;
-  font-family: Arial;
-
+  /*font-family: Georgia, Times, serif;*/ 
 }
 
 div#adminbar {
