@@ -169,7 +169,7 @@ class CCV extends CDatabase {
       
       if(isset($this->edititem) && $cvgroup->itemid==$this->edititem) {
       
-	  $html .= "<li>".$this->EditItem($cvgroup->itemid)."</li>";
+	  $html .= "<li class='cv-item'>".$this->EditItem($cvgroup->itemid)."</li>";
       
       }
       else {
@@ -181,7 +181,7 @@ class CCV extends CDatabase {
 	case "yearfirst": 
 	if (!empty($cvgroup->description)) {
 
-	  $html .= "<li>{$cvgroup->year1}, {$cvgroup->description} $edititem</li>";
+	  $html .= "<li class='cv-item'>{$cvgroup->year1}, {$cvgroup->description} $edititem</li>";
 	  
 	  }
 	
@@ -190,7 +190,7 @@ class CCV extends CDatabase {
 	case "yearlast": 
 	if (!empty($cvgroup->description)) {
 	
-	  $html .= "<li>{$cvgroup->description}, ({$cvgroup->year1}) $edititem</li>";
+	  $html .= "<li class='cv-item'>{$cvgroup->description}, ({$cvgroup->year1}) $edititem</li>";
 	}
 	break;
 	
@@ -198,16 +198,16 @@ class CCV extends CDatabase {
 	
 	  if (!empty($cvgroup->groupdescription)) {
 
-	  $html .= "<p>{$cvgroup->groupdescription} $editgroup</p>";
+	  $html .= "<div>{$cvgroup->groupdescription} $editgroup</div>";
 	}
 	
 	break;
 	
 	case "noyear": 
 	
-	  if (!empty($cvgroup->groupdescription)) {
+	  if (!empty($cvgroup->description)) {
 
-	  $html .= "<li>{$cvgroup->description} $edititem</li>";
+	  $html .= "<li class='cv-item'>{$cvgroup->description} $edititem</li>";
 	}
 	
 	break;
