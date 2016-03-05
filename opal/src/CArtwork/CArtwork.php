@@ -24,7 +24,7 @@ class CArtwork extends CDatabase {
  
  public function WorkMenu() {
  
- $html = "<a href='works.php?type=drawing'>Teckningar</a> | <a href='works.php?type=painting'>Målningar</a> | <a href='works.php?type=installation'>Installation</a>";
+ $html = "<div class='workmenu'><a href='works.php?type=drawing'>Teckningar</a> <a href='works.php?type=painting'>Målningar</a> <a href='works.php?type=installation'>Installation</a></div>";
  return $html;
  }
  
@@ -87,18 +87,22 @@ class CArtwork extends CDatabase {
   
   case "single":
   $this->GetWork($this->item);
+  $html .= $this->WorkWithInfo($this->works);
   break;
   
   case "drawing":
   $this->GetDrawings();
+  $html = $this->WorkAsList($this->works);
   break;
   
   case "painting":
   $this->GetPaintings();
+  $html = $this->WorkAsList($this->works);
   break;
   
   case "installation":
   $this->GetInstallations();
+  $html = $this->WorkAsList($this->works);
   break;
   
   default:
@@ -107,10 +111,25 @@ class CArtwork extends CDatabase {
 
   }
   
-  foreach($this->works as $work) {
-      $html .= "<figure><a href='works.php?type=single&id={$work->workid}'><img src='img.php?src=work/{$work->workimage}'></a><figcaption>{$work->worktitle} {$work->year}</figcaption></figure>";
-  }
+  return $html;
 
+  
+  }
+  
+  
+  public function WorkAsList($works) {
+  $html = "";
+  foreach($works as $work) {
+      $html .= "<figure class='work'><a href='works.php?type=single&id={$work->workid}'><img class='work' title='{$work->worktitle} {$work->year}' alt='{$work->worktitle} {$work->year}' src='img.php?src=work/{$work->workimage}&width=400'></a><figcaption>{$work->worktitle} {$work->year}</figcaption></figure>";
+  }
+  return $html;
+  }
+  
+  public function WorkWithInfo($works) {
+  foreach($works as $work) {
+      $html = "<h2>{$work->worktitle}</h2>";
+      $html .= "<figure><img class='work' title='{$work->worktitle} {$work->year}' alt='{$work->worktitle} {$work->year}' src='img.php?src=work/{$work->workimage}'><figcaption>Titel: {$work->worktitle} <br>År: {$work->year}<br>Teknik: {$work->technique}<br>Storlek: {$work->worksize}</figcaption></figure>";
+  }
   return $html;
   }
   
