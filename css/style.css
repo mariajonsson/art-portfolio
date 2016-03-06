@@ -21,7 +21,7 @@ figure {
 
 figure.work {
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
 a {
@@ -87,8 +87,8 @@ section {
 #header {
   vertical-align: middle;
   position: relative;
-  margin-bottom: 30px;
-  margin-top: 15px;
+  margin-bottom: 25px;
+  margin-top: 5px;
 }
 
 .sitetitleslogan {
@@ -203,12 +203,17 @@ div#adminbar {
 
 }
 
+div.workmenu {
+  margin-bottom: 2em;
+}
 
 div.workmenu a {
-  margin-right: 15px;
-  font-size: 1.1em;
-  color: #3C3230;
-
+  border: 1px solid #d3cac3;
+  border-radius: 0.6em;
+  color: #3c3230;
+  font-size: 1.05em;
+  margin-right: 7px;
+  padding: 0.1em 0.5em;
 }
  
 /* to style the submenu, start by hiding it using absolute positioning */
