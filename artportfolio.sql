@@ -215,7 +215,9 @@ INSERT INTO `technique` (`technique`, `description`) VALUES
 ('akvarell', NULL),
 ('blandteknik', NULL),
 ('blyerts', NULL),
+('installation', NULL),
 ('olja', NULL),
+('skulptur', NULL),
 ('tusch', NULL),
 ('tuschlavering', NULL),
 ('tuschteckning', NULL);
