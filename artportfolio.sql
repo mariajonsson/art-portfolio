@@ -73,7 +73,12 @@ INSERT INTO `artwork` (`workid`, `worktitle`, `technique`, `worksize`, `workdesc
 (11, 'Primary Colors: Amethyst', 'akvarell', '24 cm x 24 cm', 'Akvarell del i serien Primary Colors. Utsmyckning på Oskarshamns sjukhus.', 'violet1-700-crop.jpg', 2012, 1),
 (12, 'Undisclosed Inquiry', 'tuschlavering', NULL, 'Tuschlavering. Del i serien Undisclosed Inquiry.', 'interior_3_700.jpg', 2014, 1),
 (13, 'Undisclosed Inquiry', 'tuschlavering', NULL, 'Tuschlavering. Del i serien Undisclosed Inquiry.', 'interior_4_700.jpg', 2014, 1),
-(14, 'Primary Colors', 'akvarell', '24 cm x 24 cm', '4 akvareller.', 'primary_700.jpg', 2012, 1);
+(14, 'Primary Colors', 'akvarell', '24 cm x 24 cm', '4 akvareller.', 'primary_700.jpg', 2012, 1),
+(15, 'Naturalis Historia', 'akvarell', '14 cm x 21 cm', 'Moon, Foliage, Roots', 'moon-foliage-roots-700.jpg', 2011, 1),
+(17, 'Where A Million Rhinestones Sit And Cry', 'installation', NULL, 'Installation med objekt, ljus och musik. Plats: Rotundan, Kalmar.', 'rhinestones-1.jpg', 2011, 1),
+(18, 'Where A Million Rhinestones Sit And Cry', 'installation', NULL, 'Installation med objekt, ljus och musik. Plats: Rotundan, Kalmar.', 'rhinestones-2.jpg', 2011, 1),
+(19, 'Where A Million Rhinestones Sit And Cry', 'installation', NULL, 'Installation med objekt, ljus och musik. Plats: Rotundan, Kalmar.', 'rhinestones-3.jpg', 2011, 1),
+(20, 'Where A Million Rhinestones Sit And Cry', 'installation', NULL, 'Installation med objekt, ljus och musik. Plats: Rotundan, Kalmar.', 'rhinestones-4.jpg', 2011, 1);
 
 -- --------------------------------------------------------
 
