@@ -21,10 +21,16 @@ class CArtwork extends CDatabase {
   
   }
  
+ public function SelectedWorkType($type) {
+ 
+ $html = ($type == $this->type) ? "class='selected-worktype'" : "";
+ return $html;
+ 
+ }
  
  public function WorkMenu() {
  
- $html = "<div class='workmenu'><a href='works.php?type=drawing'>Teckningar</a> <a href='works.php?type=painting'>Målningar</a> <a href='works.php?type=installation'>Installation</a></div>";
+ $html = "<div class='workmenu'><a href='works.php?type=drawing' ".$this->SelectedWorkType('drawing').">Teckningar</a> <a href='works.php?type=inkwashes' ".$this->SelectedWorkType('inkwashes').">Tuschmålningar</a> <a href='works.php?type=watercolor' ".$this->SelectedWorkType('watercolor').">Akvareller</a> <a href='works.php?type=installation' ".$this->SelectedWorkType('installation').">Installation</a></div>";
  return $html;
  }
  
@@ -66,6 +72,24 @@ class CArtwork extends CDatabase {
   
   }
   
+  public function GetWatercolor() {
+  
+  $sql = "SELECT * FROM artwork WHERE public=1 AND (technique='akvarell') ORDER BY year DESC";
+  $res = $this->ExecuteSelectQueryAndFetchAll($sql);
+  
+  $this->works = $res;
+  
+  }
+  
+  public function GetInkwashes() {
+  
+  $sql = "SELECT * FROM artwork WHERE public=1 AND (technique='tuschlavering') ORDER BY year DESC";
+  $res = $this->ExecuteSelectQueryAndFetchAll($sql);
+  
+  $this->works = $res;
+  
+  }
+  
     public function GetInstallations() {
   
   $sql = "SELECT * FROM artwork WHERE public=1 AND (technique='installation') ORDER BY year DESC";
@@ -97,6 +121,14 @@ class CArtwork extends CDatabase {
   
   case "painting":
   $this->GetPaintings();
+  $html = $this->WorkAsList($this->works);
+  break;
+  case "watercolor":
+  $this->GetWatercolor();
+  $html = $this->WorkAsList($this->works);
+  break;
+  case "inkwashes":
+  $this->GetInkwashes();
   $html = $this->WorkAsList($this->works);
   break;
   

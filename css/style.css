@@ -25,15 +25,16 @@ figure.work {
 }
 
 a {
-	color: #786E6C;
-	text-decoration:none;
+  color: #786E6C;
+  text-decoration:none;
 }
 
 a.selected {
     color: black;
-    font-style: italic;
-  
+    font-style: italic; 
 }
+
+
 
 a:hover {
 	color: #800060;
@@ -208,13 +209,16 @@ div.workmenu {
 }
 
 div.workmenu a {
-  border: 1px solid #d3cac3;
+ border: 1px solid #EAE4E3; 
+  /* background-color: #EAE4E3;*/
   border-radius: 0.6em;
   color: #3c3230;
   font-size: 1.05em;
   margin-right: 7px;
   padding: 0.1em 0.5em;
 }
+
+
  
 /* to style the submenu, start by hiding it using absolute positioning */
 .navbar ul ul, .adminbar ul ul {
@@ -373,7 +377,10 @@ ul#usernav li a.selected {
   font-style: normal;
 }
 
+div.workmenu a.selected-worktype {
+  background-color: #d3cac3;
 
+}
 
 /* Tables */
 
