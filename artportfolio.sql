@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.10deb1
+-- version 4.4.13.1
 -- http://www.phpmyadmin.net
 --
--- Värd: localhost
--- Skapad: 06 mars 2016 kl 19:55
--- Serverversion: 5.5.47-0ubuntu0.14.04.1
--- PHP-version: 5.5.9-1ubuntu4.14
+-- Värd: localhost:3306
+-- Tid vid skapande: 08 mars 2016 kl 09:22
+-- Serverversion: 5.6.26
+-- PHP-version: 5.5.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,12 +14,12 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Databas: `artportfolio`
 --
-CREATE DATABASE IF NOT EXISTS `artportfolio` DEFAULT CHARACTER SET utf8 COLLATE utf8_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `artportfolio` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `artportfolio`;
 
 -- --------------------------------------------------------
@@ -31,8 +31,7 @@ USE `artportfolio`;
 DROP TABLE IF EXISTS `artcategory`;
 CREATE TABLE IF NOT EXISTS `artcategory` (
   `artcategory` varchar(30) COLLATE utf8_swedish_ci NOT NULL,
-  `artcatdesc` text COLLATE utf8_swedish_ci,
-  PRIMARY KEY (`artcategory`)
+  `artcatdesc` text COLLATE utf8_swedish_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 -- --------------------------------------------------------
@@ -43,17 +42,15 @@ CREATE TABLE IF NOT EXISTS `artcategory` (
 
 DROP TABLE IF EXISTS `artwork`;
 CREATE TABLE IF NOT EXISTS `artwork` (
-  `workid` int(11) NOT NULL AUTO_INCREMENT,
+  `workid` int(11) NOT NULL,
   `worktitle` varchar(40) COLLATE utf8_swedish_ci NOT NULL,
   `technique` varchar(30) COLLATE utf8_swedish_ci NOT NULL,
   `worksize` varchar(20) COLLATE utf8_swedish_ci DEFAULT NULL,
   `workdescription` text COLLATE utf8_swedish_ci,
   `workimage` varchar(40) COLLATE utf8_swedish_ci DEFAULT NULL,
   `year` int(4) DEFAULT NULL,
-  `public` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`workid`),
-  KEY `technique` (`technique`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci AUTO_INCREMENT=15 ;
+  `public` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Dumpning av Data i tabell `artwork`
@@ -88,14 +85,13 @@ INSERT INTO `artwork` (`workid`, `worktitle`, `technique`, `worksize`, `workdesc
 
 DROP TABLE IF EXISTS `content`;
 CREATE TABLE IF NOT EXISTS `content` (
-  `contentid` int(11) NOT NULL AUTO_INCREMENT,
+  `contentid` int(11) NOT NULL,
   `contenttype` varchar(20) COLLATE utf8_swedish_ci NOT NULL,
   `url` varchar(30) COLLATE utf8_swedish_ci DEFAULT NULL,
   `contenttitle` varchar(40) COLLATE utf8_swedish_ci NOT NULL,
   `contenttext` text COLLATE utf8_swedish_ci,
-  `public` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`contentid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci AUTO_INCREMENT=4 ;
+  `public` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Dumpning av Data i tabell `content`
@@ -103,8 +99,7 @@ CREATE TABLE IF NOT EXISTS `content` (
 
 INSERT INTO `content` (`contentid`, `contenttype`, `url`, `contenttitle`, `contenttext`, `public`) VALUES
 (1, 'page', 'contact', 'Kontakt', '<h2 >Kontakt</h2>\r\n<p>\r\n  <a href="mailto:maria@mariajonsson.com">maria@mariajonsson.com</a><br>\r\n  0736672278</p>\r\n\r\n\r\n<h2 >L&auml;nkar</h2>\r\n<p><a href="http://be.net/mariajonsson">behance / portfolio</a><br>\r\n  <a href="http://blognaif.tumblr.com/">blog na&iuml;f / min fotoblogg p&aring; tumblr.com</a>\r\n</p>\r\n<p><a href="http://www.facebook.com/Meaxylon"><img src="img/f_logo.jpg" width="20" height="20" border="0" alt="Meaxylon page" /></a>&nbsp;<a href="http://instagram.com/meaxylon"><img src="img/instagram-glyph.jpg" width="20" height="20" border="0" alt="Meaxylon instagram" /></a></p>', 1),
-(2, 'page', 'index', ' ', '<img src="img.php?src=work/interior_2_700.jpg&height=250"><img src="img.php?src=work/pencil_corylus_1_700.jpg&height=250">', 1),
-(3, 'page', 'works', '', '<img src="img.php?src=work/interior_2_700.jpg&height=250"><img src="img.php?src=work/pencil_corylus_1_700.jpg&height=250">', 1);
+(2, 'page', 'index', '', '<figure><img class=''work'' title="" alt="" src=''img.php?src=work/interior_2_700.jpg''><figcaption>Undisclosed Inquiry, 2014</figcaption></figure>', 1);
 
 -- --------------------------------------------------------
 
@@ -114,13 +109,11 @@ INSERT INTO `content` (`contentid`, `contenttype`, `url`, `contenttitle`, `conte
 
 DROP TABLE IF EXISTS `cvgroup`;
 CREATE TABLE IF NOT EXISTS `cvgroup` (
-  `groupid` int(2) NOT NULL AUTO_INCREMENT,
+  `groupid` int(2) NOT NULL,
   `groupname` varchar(40) COLLATE utf8_swedish_ci NOT NULL,
   `groupdescription` text COLLATE utf8_swedish_ci NOT NULL,
-  `weight` int(2) DEFAULT NULL,
-  PRIMARY KEY (`groupid`),
-  UNIQUE KEY `groupname` (`groupname`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci AUTO_INCREMENT=10 ;
+  `weight` int(2) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Dumpning av Data i tabell `cvgroup`
@@ -145,15 +138,13 @@ INSERT INTO `cvgroup` (`groupid`, `groupname`, `groupdescription`, `weight`) VAL
 
 DROP TABLE IF EXISTS `cvitem`;
 CREATE TABLE IF NOT EXISTS `cvitem` (
-  `itemid` int(11) NOT NULL AUTO_INCREMENT,
+  `itemid` int(11) NOT NULL,
   `description` text COLLATE utf8_swedish_ci NOT NULL,
   `year1` int(4) DEFAULT NULL,
   `year2` int(4) DEFAULT NULL,
   `weight` int(2) DEFAULT NULL,
-  `itemgroup` int(2) NOT NULL,
-  PRIMARY KEY (`itemid`),
-  KEY `itemgroup` (`itemgroup`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci AUTO_INCREMENT=35 ;
+  `itemgroup` int(2) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Dumpning av Data i tabell `cvitem`
@@ -184,10 +175,10 @@ INSERT INTO `cvitem` (`itemid`, `description`, `year1`, `year2`, `weight`, `item
 (24, '"Veckans konstnär", Hamnmagasinet, Mönsterås Konstförening', 2008, NULL, NULL, 7),
 (25, 'Ölands Konstskolas avgångsutställning, Oskarshamns Konsthall', 2008, NULL, NULL, 7),
 (26, '"14:12", Ölands Konstskola i samarbete med Kalmar Konstmuseum', 2007, NULL, NULL, 7),
-(27, 'Illustrationer, tidsskriften "Nio-Fem - tidsskrift om arbetsliv och profession" (Nr 2 2014, Nr 1 2015)', 2014, 2015, 1, 8),
-(28, 'Omslag, boken "Det är bara regn", Alice Eggers, (Pequod Press, 2012)', 2012, NULL, 2, 8),
-(29, 'Illustrationer, omslag, boken "Ett Eden i Vickleby" Gunilla Pravitz, (2010)', 2010, NULL, 3, 8),
-(30, 'Illustrationer till tidningen People, (2009)', 2009, NULL, 4, 8),
+(27, 'Illustrationer, tidsskriften "Nio-Fem - tidsskrift om arbetsliv och profession" (Nr 2 2014, Nr 1 2015)', NULL, NULL, 1, 8),
+(28, 'Omslag, boken "Det är bara regn", Alice Eggers, (Pequod Press, 2012)', NULL, NULL, 2, 8),
+(29, 'Illustrationer, omslag, boken "Ett Eden i Vickleby" Gunilla Pravitz, (2010)', NULL, NULL, 3, 8),
+(30, 'Illustrationer till tidningen People, (2009)', NULL, NULL, 4, 8),
 (31, 'Logotyp till Yellow Danger Brewery', 2014, NULL, NULL, 9),
 (32, 'Logotyp och grafisk profil till TAM-Arkiv', 2014, NULL, NULL, 9),
 (33, 'Grafisk form till skivomslag, Preybird ”St. Preybird”', 2011, NULL, NULL, 9),
@@ -202,8 +193,7 @@ INSERT INTO `cvitem` (`itemid`, `description`, `year1`, `year2`, `weight`, `item
 DROP TABLE IF EXISTS `technique`;
 CREATE TABLE IF NOT EXISTS `technique` (
   `technique` varchar(30) COLLATE utf8_swedish_ci NOT NULL,
-  `description` text COLLATE utf8_swedish_ci,
-  PRIMARY KEY (`technique`)
+  `description` text COLLATE utf8_swedish_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
@@ -230,15 +220,13 @@ INSERT INTO `technique` (`technique`, `description`) VALUES
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `acronym` char(12) NOT NULL,
   `name` varchar(80) DEFAULT NULL,
   `password` char(32) DEFAULT NULL,
   `salt` int(11) NOT NULL,
-  `userrole` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `acronym` (`acronym`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+  `userrole` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Dumpning av Data i tabell `user`
@@ -255,13 +243,102 @@ INSERT INTO `user` (`id`, `acronym`, `name`, `password`, `salt`, `userrole`) VAL
 
 DROP TABLE IF EXISTS `workgroup`;
 CREATE TABLE IF NOT EXISTS `workgroup` (
-  `wgroupid` int(11) NOT NULL AUTO_INCREMENT,
+  `wgroupid` int(11) NOT NULL,
   `wgrouptitle` varchar(40) COLLATE utf8_swedish_ci NOT NULL,
   `wgroupdescription` text COLLATE utf8_swedish_ci,
-  `wgroupimage` varchar(30) COLLATE utf8_swedish_ci DEFAULT NULL,
-  PRIMARY KEY (`wgroupid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci AUTO_INCREMENT=1 ;
+  `wgroupimage` varchar(30) COLLATE utf8_swedish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
+--
+-- Index för dumpade tabeller
+--
+
+--
+-- Index för tabell `artcategory`
+--
+ALTER TABLE `artcategory`
+  ADD PRIMARY KEY (`artcategory`);
+
+--
+-- Index för tabell `artwork`
+--
+ALTER TABLE `artwork`
+  ADD PRIMARY KEY (`workid`),
+  ADD KEY `technique` (`technique`);
+
+--
+-- Index för tabell `content`
+--
+ALTER TABLE `content`
+  ADD PRIMARY KEY (`contentid`);
+
+--
+-- Index för tabell `cvgroup`
+--
+ALTER TABLE `cvgroup`
+  ADD PRIMARY KEY (`groupid`),
+  ADD UNIQUE KEY `groupname` (`groupname`);
+
+--
+-- Index för tabell `cvitem`
+--
+ALTER TABLE `cvitem`
+  ADD PRIMARY KEY (`itemid`),
+  ADD KEY `itemgroup` (`itemgroup`);
+
+--
+-- Index för tabell `technique`
+--
+ALTER TABLE `technique`
+  ADD PRIMARY KEY (`technique`);
+
+--
+-- Index för tabell `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `acronym` (`acronym`);
+
+--
+-- Index för tabell `workgroup`
+--
+ALTER TABLE `workgroup`
+  ADD PRIMARY KEY (`wgroupid`);
+
+--
+-- AUTO_INCREMENT för dumpade tabeller
+--
+
+--
+-- AUTO_INCREMENT för tabell `artwork`
+--
+ALTER TABLE `artwork`
+  MODIFY `workid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+--
+-- AUTO_INCREMENT för tabell `content`
+--
+ALTER TABLE `content`
+  MODIFY `contentid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT för tabell `cvgroup`
+--
+ALTER TABLE `cvgroup`
+  MODIFY `groupid` int(2) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT för tabell `cvitem`
+--
+ALTER TABLE `cvitem`
+  MODIFY `itemid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
+--
+-- AUTO_INCREMENT för tabell `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT för tabell `workgroup`
+--
+ALTER TABLE `workgroup`
+  MODIFY `wgroupid` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Restriktioner för dumpade tabeller
 --
