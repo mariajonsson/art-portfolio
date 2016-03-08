@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `content` (
 
 INSERT INTO `content` (`contentid`, `contenttype`, `url`, `contenttitle`, `contenttext`, `public`) VALUES
 (1, 'page', 'contact', 'Kontakt', '<h2 >Kontakt</h2>\r\n<p>\r\n  <a href="mailto:maria@mariajonsson.com">maria@mariajonsson.com</a><br>\r\n  0736672278</p>\r\n\r\n\r\n<h2 >L&auml;nkar</h2>\r\n<p><a href="http://be.net/mariajonsson">behance / portfolio</a><br>\r\n  <a href="http://blognaif.tumblr.com/">blog na&iuml;f / min fotoblogg p&aring; tumblr.com</a>\r\n</p>\r\n<p><a href="http://www.facebook.com/Meaxylon"><img src="img/f_logo.jpg" width="20" height="20" border="0" alt="Meaxylon page" /></a>&nbsp;<a href="http://instagram.com/meaxylon"><img src="img/instagram-glyph.jpg" width="20" height="20" border="0" alt="Meaxylon instagram" /></a></p>', 1),
-(2, 'page', 'index', '', '<figure><img class=''work'' title="" alt="" src=''img.php?src=work/interior_2_700.jpg''><figcaption>Undisclosed Inquiry, 2014</figcaption></figure>', 1);
+(2, 'page', 'index', '', '<figure><img class="work" title="" alt="" src="img.php?src=work/interior_2_700.jpg"><figcaption>Undisclosed Inquiry, 2014</figcaption></figure>', 1);
 
 -- --------------------------------------------------------
 
