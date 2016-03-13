@@ -158,7 +158,7 @@ div#navbar {
   width: 100%;
   font-size:1.5em;
   margin-top: 1.5em;
-
+  text-transform: lowercase;
   /*font-family: Georgia, Times, serif;*/ 
 }
 
