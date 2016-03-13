@@ -143,28 +143,28 @@ $opal['navbar'] = array(
     
         // This is a menu item
     'works'  => array(
-      'text'  =>'Verk',   
+      'text'  =>'verk',   
       'url'   =>'works.php',  
       'title' => 'Verk'
     ),
     
     // This is a menu item
     'cv'  => array(
-      'text'  =>'CV',   
+      'text'  =>'cv',   
       'url'   =>'cv.php',  
       'title' => 'CV'
     ),
     
         // This is a menu item
     'contact'  => array(
-      'text'  =>'Kontakt',   
+      'text'  =>'kontakt',   
       'url'   =>'contact.php',  
       'title' => 'Kontakt'
     ),
         // This is a menu item
     'blog'  => array(
-      'text'  =>'Blog',   
-      'url'   =>'blog',  
+      'text'  =>'blogg',   
+      'url'   =>'blogg',  
       'title' => 'Blogg'
     ),
 

@@ -138,7 +138,7 @@ class CArtwork extends CDatabase {
   break;
   
   default:
-  $this->GetAllWorks();	
+  $html = $this->NoWorks();	
   break;
 
   }
@@ -147,7 +147,12 @@ class CArtwork extends CDatabase {
 
   
   }
+
+    public function NoWorks() {
+  $html = "<p>Välj en kategori.</p>";
   
+  return $html;
+  }
   
   public function WorkAsList($works) {
   $html = "";

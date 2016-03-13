@@ -20,8 +20,8 @@ figure {
 }
 
 figure.work {
-  margin-top: 15px;
-  margin-bottom: 25px;
+  margin-top: 2em;
+  margin-bottom: 2.2em;
 }
 
 a {
@@ -156,8 +156,8 @@ div#navbar {
   clear: both;
   height: 40px;
   width: 100%;
-  font-size:1.3em;
-  margin-top: 15px;
+  font-size:1.5em;
+  margin-top: 1.5em;
 
   /*font-family: Georgia, Times, serif;*/ 
 }
@@ -205,6 +205,7 @@ div#adminbar {
 }
 
 div.workmenu {
+  margin-top: 1.2em;
   margin-bottom: 2em;
 }
 
@@ -213,12 +214,14 @@ div.workmenu a {
   /* background-color: #EAE4E3;*/
   border-radius: 0.6em;
   color: #3c3230;
-  font-size: 1.05em;
+  font-size: 1.2em;
   margin-right: 7px;
   padding: 0.1em 0.5em;
 }
 
-
+div.workmenu a:hover {
+  background-color: #EAE4E3;
+}
  
 /* to style the submenu, start by hiding it using absolute positioning */
 .navbar ul ul, .adminbar ul ul {
