@@ -14,6 +14,13 @@ body {
   
 }
 
+@media (orientation: portrait) {
+body {
+  font-size: 0.9em;
+}
+}
+
+
 p {
   font-size: 1em;
 }
@@ -128,12 +135,22 @@ section {
   font-family: Georgia, Times, serif; 
   color: black;
 }
+
+@media (orientation: portrait) {
+.sitetitle {
+  font-size: 1.7em;
+}
+}
  
 .siteslogan {
   display: block;
-  color: #666;
- 
-  
+  color: #666; 
+}
+
+@media (orientation: portrait) {
+.siteslogan {
+  font-size: 0.6em;
+}
 }
 
 .sitelogo {
@@ -174,12 +191,19 @@ section {
  */
 
 div#navbar {
-  font-size: 2em;
+  font-size: 1.6em;
   clear: both;
   width: 100%;
   margin-top: 0.5em;
   text-transform: lowercase;
   /*font-family: Georgia, Times, serif;*/ 
+}
+
+
+@media (orientation: portrait) {
+div#navbar {
+  font-size: 2.7em;
+}
 }
 
 div#adminbar {
@@ -234,9 +258,15 @@ div.workmenu a {
   /* background-color: #EAE4E3;*/
   border-radius: 0.6em;
   color: #3c3230;
-  font-size: 1.5em;
+  font-size: 1.1em;
   margin-right: 0.5em;
   padding: 0.1em 0.5em;
+}
+
+@media (orientation: portrait) {
+div.workmenu a {
+  font-size: 1.7em;
+}
 }
 
 div.workmenu a:hover {
@@ -302,6 +332,10 @@ div.workmenu a:hover {
   margin-right: 0.7em;
 
 }
+
+
+
+
 .adminbar li {
   margin-right: 1em;
 
@@ -336,11 +370,12 @@ div.workmenu a:hover {
 }
 
 .navbar li li a {
-	
 	color: #55C2C6;
 	white-space: nowrap;  /*to make the drop-down menu items stay on one row */
 	font-size: 0.9em;
 }
+
+
 
 .navbar li.selected li a {
     border-bottom: none;
