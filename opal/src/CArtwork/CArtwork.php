@@ -157,7 +157,7 @@ class CArtwork extends CDatabase {
   public function WorkAsList($works) {
   $html = "";
   foreach($works as $work) {
-      $html .= "<figure class='work'><a href='works.php?type=single&id={$work->workid}'><img class='work' title='{$work->worktitle} {$work->year}' alt='{$work->worktitle} {$work->year}' src='img.php?src=work/{$work->workimage}&width=400'></a><figcaption>{$work->worktitle} {$work->year}</figcaption></figure>";
+      $html .= "<figure class='work'><a href='works.php?type=single&id={$work->workid}'><img class='work' title='{$work->worktitle} {$work->year}' alt='{$work->worktitle} {$work->year}' src='img.php?src=work/{$work->workimage}&width=700'></a><figcaption>{$work->worktitle} {$work->year}</figcaption></figure>";
   }
   return $html;
   }

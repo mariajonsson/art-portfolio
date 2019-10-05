@@ -59,7 +59,6 @@ $opal['lang']         = 'sv';
 $opal['title_append'] = ' | mariajonsson.com';
 
 $opal['header'] = <<<EOD
-<img class='sitelogo' src='img.php?src=logo.jpg&height=60' alt='Logo'/>
 <a href="index.php"><span class='sitetitle'>Maria Jonsson</span></a>
 <span class='siteslogan'>Konstnär</span>
 EOD;

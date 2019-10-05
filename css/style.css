@@ -9,9 +9,17 @@ html {
 
 body {
   color: #333;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
+   font-family: Georgia, Times, serif; 
+  font-size: 1em;
   
+}
+
+p {
+  font-size: 1em;
+}
+
+p.white {
+  color: #FFF;
 }
 
 figure {
@@ -22,6 +30,8 @@ figure {
 figure.work {
   margin-top: 2em;
   margin-bottom: 2.2em;
+  margin-right: 1em;
+  /*display: inline-block;*/
 }
 
 a {
@@ -63,6 +73,18 @@ h1, h2, h3, h4 {
   
 }
 
+h1 {
+font-size: 1.7em;
+}
+
+h2 {
+font-size: 1.5em;
+}
+
+h3 {
+font-size: 1.2em;
+}
+
 
 
 section {
@@ -70,15 +92,14 @@ section {
   margin-bottom: 3em;
 }
 
-
  
 /**
  * Layout of the main page elements 
  */
 #wrapper {
   margin: 0 auto;
-  width: 900px; 
-  padding: 10px;
+  width: auto; 
+  padding: 2em;
 }
  
  
@@ -88,22 +109,22 @@ section {
 #header {
   vertical-align: middle;
   position: relative;
-  margin-bottom: 25px;
-  margin-top: 5px;
+  margin-bottom: 0.5em;
+  margin-top: 0.2em;
 }
 
 .sitetitleslogan {
    display: inline-block;
     /*left: 70px;*/
     position: relative;
-    top: 0px;
+    top: 0;
     vertical-align: bottom;
-    width: 300px;
+    width: auto;
     
 }
  
 .sitetitle {
-  font-size: 3em;
+  font-size: 2.5em;
   font-family: Georgia, Times, serif; 
   color: black;
 }
@@ -138,8 +159,8 @@ section {
  * Layout for footer
  */
 #footer {
-  margin-top: 40px;
-  padding-top: 15px;
+  margin-top: 2em;
+  padding-top: 1em;
   clear:both;
 }
  
@@ -153,11 +174,10 @@ section {
  */
 
 div#navbar {
+  font-size: 2em;
   clear: both;
-  height: 40px;
   width: 100%;
-  font-size:1.5em;
-  margin-top: 1.5em;
+  margin-top: 0.5em;
   text-transform: lowercase;
   /*font-family: Georgia, Times, serif;*/ 
 }
@@ -165,14 +185,14 @@ div#navbar {
 div#adminbar {
   background-color: #000000;
   border-bottom: 1px solid #000000;
-  height: 25px;
+  height: 1em;
   width: 100%;
   font-size:0.95em;
   position: fixed;
-  top:0px;
-  left:0px;
-  margin-top: 0px;
-  padding-top: 5px;
+  top:0;
+  left:0;
+  margin-top: 0;
+  padding-top: 0.2em;
   z-index: 5;
 }
   
@@ -182,8 +202,8 @@ div#adminbar {
 .navbar {
 
 	display: block;
-	margin-left: 0px;
-	padding:0px;
+	margin-left: 0;
+	padding:0;
 	width: 100%;
 }
 
@@ -199,7 +219,7 @@ div#adminbar {
   width: 100%;
   list-style: none; 
   margin-top: 0;
-  margin-left: 25px;
+  margin-left: 2em;
   padding: 0;
 
 }
@@ -210,12 +230,12 @@ div.workmenu {
 }
 
 div.workmenu a {
- border: 1px solid #EAE4E3; 
+ border: 0.05em solid #EAE4E3; 
   /* background-color: #EAE4E3;*/
   border-radius: 0.6em;
   color: #3c3230;
-  font-size: 1.2em;
-  margin-right: 7px;
+  font-size: 1.5em;
+  margin-right: 0.5em;
   padding: 0.1em 0.5em;
 }
 
@@ -226,12 +246,12 @@ div.workmenu a:hover {
 /* to style the submenu, start by hiding it using absolute positioning */
 .navbar ul ul, .adminbar ul ul {
   background-color: transparent; 
-  padding: 8px; 
+  padding: 0.7em; 
   position: absolute; 
-  left: -9999px; 
+  left: -9999em; 
   z-index: 2;
-  margin-right: 0px;
-  margin-left: 0px;
+  margin-right: 0;
+  margin-left: 0;
 
 }
  
@@ -241,55 +261,56 @@ div.workmenu a:hover {
 .navbar li.selected-parent ul
 {
   background-color: transparent;
-  top: 15px;
-  left: -9999px;
+  top: 1em;
+  left: -9999em;
 }
 
 .navbar li:hover ul,
 .adminbar li:hover ul
 {
-  top: 20px;
+  top: 2em;
   left: 0;
   background-color: #fefefe;
   z-index: 3;
 }
 .adminbar li:hover ul
 {
-  top: 16px;
+  top: 1em;
   z-index: 1;
   background-color: #000000;
 
 }
 
 .adminbar li:hover ul {
-  top: 16px;
+  top: 1em;
   
 }
  
 
 
 .navbar li, .adminbar li {
-	margin-left: 0px;
+	margin-left: 0;
 	display: inline-block;
 	position: relative; /* to place the drop-down menu correctly */
-	padding: 0px;
+	padding: 0;
 	margin-bottom: 0.5em;
 
 }
 
 .navbar li {
-  margin-right: 25px;
+  width: auto;
+  margin-right: 0.7em;
 
 }
 .adminbar li {
-  margin-right: 10px;
+  margin-right: 1em;
 
 }
 
 .navbar ul ul li, .adminbar ul ul li {
 	display: block;
 	position: relative; /* to place the drop-down menu correctly */
-	margin-right: 1px;
+	margin-right: 0;
 }
 
 .navbar a {
@@ -332,7 +353,7 @@ div.workmenu a:hover {
 .navbar ul > li.selected-parent > a
 {
   color:#800060;
-  border-bottom: 4px solid #050505;
+  border-bottom: 0.1em solid #050505;
   position: relative;
   z-index: 4;
 }
@@ -342,7 +363,7 @@ div.workmenu a:hover {
 .adminbar ul > li.selected-parent > a
 {
   color: #ffffff;
-  border-bottom: 4px solid #5EC2CB;
+  border-bottom: 0.1em solid #5EC2CB;
   position: relative;
   z-index: 4;
 }
@@ -352,7 +373,7 @@ div.workmenu a:hover {
 .navbar li li.selected a 
 {
 
-  border-bottom: 3px solid #050505;
+  border-bottom: 0.2em solid #050505;
 }
 
 .adminbar li li:hover a,
@@ -360,23 +381,23 @@ div.workmenu a:hover {
 .adminbar li li.selected a 
 {
 
-  border-bottom: 3px solid #5EC2CB;
+  border-bottom: 0.2em solid #5EC2CB;
 }
 
 ul#usernav {
   list-style-type: none;
-  padding-left: 0px;
+  padding-left: 0;
 }
 
 ul#usernav li {
   display: inline-block;
   font-weight: bold;
-  margin-right: 15px;
+  margin-right: 1em;
   
 }
 
 ul#usernav li a.selected {
-  border-bottom: 3px solid #000000;
+  border-bottom: 0.2em solid #000000;
   font-style: normal;
 }
 
@@ -388,14 +409,14 @@ div.workmenu a.selected-worktype {
 /* Tables */
 
 table {
-	border-spacing: 0px;
+	border-spacing: 0;
 	border-collapse: collapse;
 	width: 100%;
 	
 }
 
 tbody {
-	padding: 0px;
+	padding: 0;
 }
 
 th {
@@ -404,10 +425,10 @@ th {
 }
 
 td {
-	border: 1px solid lightgrey;
-	border-right: 0px solid white;
-	border-left: 0px solid white;
-	padding: 3px;
+	border: 0.1em solid lightgrey;
+	border-right: 0 solid white;
+	border-left: 0 solid white;
+	padding: 0.2em;
 }
 
 
@@ -420,7 +441,7 @@ td {
  **/
 
 fieldset {
-  border: 0px;
+  border: 0;
   
 }
 

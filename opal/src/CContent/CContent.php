@@ -60,7 +60,7 @@ class CContent extends CDatabase {
     $html .= "</form>";
   }
   else {
-    $html .= "<h1>{$this->page->contenttitle}</h1>";
+   /* $html .= "<h1>{$this->page->contenttitle}</h1>"; */
     $html .= "{$this->page->contenttext}";
   }
   }
