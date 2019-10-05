@@ -131,7 +131,7 @@ section {
 }
  
 .sitetitle {
-  font-size: 2.5em;
+  font-size: 2em;
   font-family: Georgia, Times, serif; 
   color: black;
 }
@@ -191,7 +191,7 @@ section {
  */
 
 div#navbar {
-  font-size: 1.6em;
+  font-size: 1.4em;
   clear: both;
   width: 100%;
   margin-top: 0.5em;
