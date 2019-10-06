@@ -41,6 +41,59 @@ figure.work {
   /*display: inline-block;*/
 }
 
+figure.workpreview {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-right: 2em;
+  display: inline-block;
+  width: 30%;
+  height: 30%;
+  vertical-align: bottom;
+}
+
+@media (orientation: portrait) {
+figure.workpreview {
+  margin-top: 2em;
+  margin-bottom: 2.2em;
+  margin-right: 1em;
+  display: inline-block;
+  width: 85%;
+  height:85%;
+}
+}
+
+img.workpreview {
+  width: 100%;
+  vertical-align: inherit;
+}
+
+
+
+figcaption.overlay {
+  position: relative;
+  margin-top: -2.6em;
+  bottom: 0;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5); /* Black see-through */
+  color: #f1f1f1;
+  width: 100%;
+  /*opacity:0;*/
+  color: white;
+  font-size: 1.3em;
+  line-height: 1.3em;
+  height:2.4em;
+  vertical-align: inherit;
+}
+
+@media (orientation: portrait) {
+figcaption.overlay {
+ height: 3.5em;
+ font-size: 2.5em;
+ line-height:2em;
+ margin-top: -3.5em;
+}
+}
+
 a {
   color: #786E6C;
   text-decoration:none;

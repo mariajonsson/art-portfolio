@@ -16,7 +16,7 @@ class CArtwork extends CDatabase {
   $this->editmode = isset($_GET['edit']) ? $_GET['edit']: null;
   $this->edititem = isset($_GET['id']) && isset($this->editmode) ? $_GET['id']: null;
   $this->item = isset($_GET['id']) ? $_GET['id']: null;
-  
+  echo $this->item;
   $this->type = isset($_GET['type']) ? $_GET['type']: null;
   
   }
@@ -53,6 +53,40 @@ class CArtwork extends CDatabase {
   $this->works = $res;
   
   }
+ 
+  //funktion som hämtar tumnaglar för verkgrupper ur databasen
+  
+  public function GetPreviews() {
+  
+  $sql = "SELECT * FROM workgroup ORDER BY wgroupsortkey ASC";
+  $res = $this->ExecuteSelectQueryAndFetchAll($sql);
+  
+  $this->works = $res;
+  
+  }
+  
+  //hämtar alla verk som hör till en grupp verk
+  
+  public function GetWorkGroupWorks($id) {
+  $sql = "SELECT * FROM artwork WHERE public=1 AND workgroupcode=?";
+  $params = array($id);
+  $res = $this->ExecuteSelectQueryAndFetchAll($sql,$params);
+  $this->works = $res;
+  
+  }
+  
+  //hämta information för en verkgrupp
+  public function GetWorkGroupInfo($id) {
+  
+  $sql = "SELECT * FROM workgroup WHERE workgroupcode=?";
+  $params = array($id);
+  $res = $this->ExecuteSelectQueryAndFetchAll($sql,$params);
+  $res = $this->ExecuteSelectQueryAndFetchAll($sql);
+  
+  $this->type = $res;
+  
+  }
+  
   
   public function GetDrawings() {
   
@@ -109,9 +143,18 @@ class CArtwork extends CDatabase {
   
   switch ($type) { 
   
+  //visa ett enskilt verk
   case "single":
   $this->GetWork($this->item);
-  $html .= $this->WorkWithInfo($this->works);
+  $html .= $this->WorkAsList($this->works);
+  break;
+  
+  //visa en vald verkgrupp, hämta info och visa överst, visa sedan alla verk
+  case "workgroup":
+  $this->GetWorkGroupWorks($this->item);
+  $this->GetWorkGroupInfo($this->item);
+  $html .= $this->WorkGroupWithInfo($this->type);
+  $html .= $this->WorkGroupAsList($this->works);
   break;
   
   case "drawing":
@@ -137,8 +180,16 @@ class CArtwork extends CDatabase {
   $html = $this->WorkAsList($this->works);
   break;
   
+  /*
   default:
   $html = $this->NoWorks();	
+  break;
+  */
+  
+  //visa thumbnails med verk eller serier
+  default:
+  $this->GetPreviews();
+  $html .= $this->WorkPreview($this->works);	
   break;
 
   }
@@ -162,6 +213,27 @@ class CArtwork extends CDatabase {
   return $html;
   }
   
+//Funktion som ska visa thumbnails för en verkserie. Länken ska leda till en presentationssida som visar verken ur serien. 
+
+    public function WorkPreview($works) {
+  $html = "";
+  foreach($works as $work) {
+      $html .= "<figure class='workpreview'><a href='works.php?type=workgroup&id={$work->wgroupcode}'><img class='workpreview' title='{$work->wgrouptitle}' alt='{$work->wgrouptitle}' src='img.php?src=work/{$work->wgroupimage}&width=600&height=450&crop-to-fit'></a><figcaption class='overlay'>{$work->wgrouptitle}</figcaption></figure>";
+  }
+  return $html;
+  }
+  
+//Visa en grupp med verk ur samma serie
+
+  public function WorkGroupWithInfo($works) {
+  foreach($works as $work) {
+      $html = "<h2>{$work->worktitle}</h2>";
+      $html .= "<figure><img class='work' title='{$work->worktitle} {$work->year}' alt='{$work->worktitle} {$work->year}' src='img.php?src=work/{$work->workimage}'><figcaption>Titel: {$work->worktitle} <br>År: {$work->year}<br>Teknik: {$work->technique}<br>Storlek: {$work->worksize}</figcaption></figure>";
+  }
+  return $html;
+  }
+  
+//Visa ett enskilt verk med information
   public function WorkWithInfo($works) {
   foreach($works as $work) {
       $html = "<h2>{$work->worktitle}</h2>";
