@@ -4,6 +4,7 @@ class CArtwork extends CDatabase {
 
   private $works;
   private $work;
+  private $workinfo;
   private $type;
   private $editmode;
   private $edititem;
@@ -16,7 +17,6 @@ class CArtwork extends CDatabase {
   $this->editmode = isset($_GET['edit']) ? $_GET['edit']: null;
   $this->edititem = isset($_GET['id']) && isset($this->editmode) ? $_GET['id']: null;
   $this->item = isset($_GET['id']) ? $_GET['id']: null;
-  echo $this->item;
   $this->type = isset($_GET['type']) ? $_GET['type']: null;
   
   }
@@ -76,14 +76,11 @@ class CArtwork extends CDatabase {
   }
   
   //hämta information för en verkgrupp
-  public function GetWorkGroupInfo($id) {
-  
-  $sql = "SELECT * FROM workgroup WHERE workgroupcode=?";
-  $params = array($id);
+  public function GetWorkGroupInfo($type) {
+  $sql = "SELECT * FROM workgroup WHERE wgroupcode=?";
+  $params = array($type);
   $res = $this->ExecuteSelectQueryAndFetchAll($sql,$params);
-  $res = $this->ExecuteSelectQueryAndFetchAll($sql);
-  
-  $this->type = $res;
+  $this->workinfo = $res;
   
   }
   
@@ -151,9 +148,10 @@ class CArtwork extends CDatabase {
   
   //visa en vald verkgrupp, hämta info och visa överst, visa sedan alla verk
   case "workgroup":
-  $this->GetWorkGroupWorks($this->item);
-  $this->GetWorkGroupInfo($this->item);
-  $html .= $this->WorkGroupWithInfo($this->type);
+  $id = $this->item;
+  $this->GetWorkGroupInfo($id);
+  $this->GetWorkGroupWorks($id);
+  $html .= $this->WorkGroupWithInfo($this->workinfo);
   $html .= $this->WorkGroupAsList($this->works);
   break;
   
@@ -226,9 +224,21 @@ class CArtwork extends CDatabase {
 //Visa en grupp med verk ur samma serie
 
   public function WorkGroupWithInfo($works) {
+  $html = "";
   foreach($works as $work) {
-      $html = "<h2>{$work->worktitle}</h2>";
-      $html .= "<figure><img class='work' title='{$work->worktitle} {$work->year}' alt='{$work->worktitle} {$work->year}' src='img.php?src=work/{$work->workimage}'><figcaption>Titel: {$work->worktitle} <br>År: {$work->year}<br>Teknik: {$work->technique}<br>Storlek: {$work->worksize}</figcaption></figure>";
+      $html = "<h2>{$work->wgrouptitle}</h2>";
+      $html .= "<figure><img class='work' title='{$work->wgrouptitle}' alt='{$work->wgrouptitle}' src='img.php?src=work/{$work->wgroupimage}'><figcaption>Titel: {$work->wgrouptitle} Beskrivning:{$work->wgroupdescription}</figcaption></figure>";
+  }
+  return $html;
+  }
+  
+    
+//Visa en grupp med verk ur samma serie
+
+  public function WorkGroupAsList($works) {
+  	  $html = "";
+	  foreach($works as $work) {
+      $html .= "<figure class='work'><a href='works.php?type=single&id={$work->workid}'><img class='work' title='{$work->worktitle} {$work->year}' alt='{$work->worktitle} {$work->year}' src='img.php?src=work/{$work->workimage}&width=700'></a><figcaption>{$work->worktitle} {$work->year}</figcaption></figure>";
   }
   return $html;
   }
