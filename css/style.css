@@ -29,6 +29,10 @@ p.white {
   color: #FFF;
 }
 
+div.workpresentation {
+  font-size: 0.9em;
+}
+
 figure {
   padding: 0;
   margin: 0;
@@ -62,12 +66,19 @@ figure.workpreview {
 }
 }
 
-img.workpreview {
-  width: 100%;
-  vertical-align: inherit;
+figure.workpresentation {
+width: 85%;
+	
 }
 
+img.workpreview {
+width: 100%;
+}
 
+img.workpresentation {
+width: 100%;
+	
+}
 
 figcaption.overlay {
   position: relative;

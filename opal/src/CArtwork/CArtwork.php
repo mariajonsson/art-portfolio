@@ -6,6 +6,7 @@ class CArtwork extends CDatabase {
   private $work;
   private $workinfo;
   private $type;
+  private $view;
   private $editmode;
   private $edititem;
   private $item;
@@ -18,6 +19,7 @@ class CArtwork extends CDatabase {
   $this->edititem = isset($_GET['id']) && isset($this->editmode) ? $_GET['id']: null;
   $this->item = isset($_GET['id']) ? $_GET['id']: null;
   $this->type = isset($_GET['type']) ? $_GET['type']: null;
+  $this->view = isset($_GET['view']) ? $_GET['view']: "workgroup";
   
   }
  
@@ -28,10 +30,39 @@ class CArtwork extends CDatabase {
  
  }
  
+  public function SelectedViewType($type) {
+ 
+ $html = ($type == $this->view) ? "class='selected-worktype'" : "";
+ return $html;
+ 
+ }
+ 
  public function WorkMenu() {
  
+   // Starttag meny
+   $html = "<div class='workmenu'>";
+   
+   //Menyval verk utifrån verkgrupp
+   $html .= "<a href='works.php?view=workgroup'".$this->SelectedViewType('workgroup').">verk</a>";
+   
+   //Menyval utifrån tema
+   $html .= "<a href='works.php?view=theme'".$this->SelectedViewType('theme').">teman</a>";
+   
+   //Menyval utifrån teknik
+	$html .= "<a href='works.php?view=technique'".$this->SelectedViewType('technique').">teknik</a>"; 
+	
+	// Endtag meny
+   $html .= "</div>";
+ 	 
+
+  return $html;
+  	 
+ 	 
+ //gammal meny baserad på tekniker	 
+ /* 
  $html = "<div class='workmenu'><a href='works.php?type=drawing' ".$this->SelectedWorkType('drawing').">Teckningar</a> <a href='works.php?type=inkwashes' ".$this->SelectedWorkType('inkwashes').">Tuschmålningar</a> <a href='works.php?type=watercolor' ".$this->SelectedWorkType('watercolor').">Akvareller</a> <a href='works.php?type=installation' ".$this->SelectedWorkType('installation').">Installation</a></div>";
  return $html;
+ */
  }
  
  
@@ -221,13 +252,16 @@ class CArtwork extends CDatabase {
   return $html;
   }
   
-//Visa en grupp med verk ur samma serie
+//Visa huvudinfo om en grupp med verk ur samma serie
 
   public function WorkGroupWithInfo($works) {
   $html = "";
   foreach($works as $work) {
       $html = "<h2>{$work->wgrouptitle}</h2>";
-      $html .= "<figure><img class='work' title='{$work->wgrouptitle}' alt='{$work->wgrouptitle}' src='img.php?src=work/{$work->wgroupimage}'><figcaption>Titel: {$work->wgrouptitle} Beskrivning:{$work->wgroupdescription}</figcaption></figure>";
+      //$html .= "<figure class='workpresentation'><img class='workpresentation' title='{$work->wgrouptitle}' alt='{$work->wgrouptitle}' src='img.php?src=work/{$work->wgroupimage}&width=700&height=150&crop-to-fit'><figcaption>";
+      //$html .= "<h4>Om verket:</h4>";
+      $html .= "<div class='workpresentation'>{$work->wgroupdescription}</div>";
+      //$html .= "</figcaption></figure>";
   }
   return $html;
   }
@@ -238,7 +272,7 @@ class CArtwork extends CDatabase {
   public function WorkGroupAsList($works) {
   	  $html = "";
 	  foreach($works as $work) {
-      $html .= "<figure class='work'><a href='works.php?type=single&id={$work->workid}'><img class='work' title='{$work->worktitle} {$work->year}' alt='{$work->worktitle} {$work->year}' src='img.php?src=work/{$work->workimage}&width=700'></a><figcaption>{$work->worktitle} {$work->year}</figcaption></figure>";
+      $html .= "<figure class='workpreview'><a href='works.php?type=single&id={$work->workid}'><img class='workpreview' title='{$work->worktitle} {$work->year}' alt='{$work->worktitle}' src='img.php?src=work/{$work->workimage}'></a></figure>";
   }
   return $html;
   }

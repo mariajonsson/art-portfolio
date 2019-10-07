@@ -60,7 +60,6 @@ $opal['title_append'] = ' | mariajonsson.com';
 
 $opal['header'] = <<<EOD
 <a href="index.php"><span class='sitetitle'>Maria Jonsson</span></a>
-<span class='siteslogan'>Konstnär</span>
 EOD;
 $opal['footer'] = <<<EOD
 <footer><!--span class='sitefooter'><!--Copyright (c) Maria Jonsson><!--/span></footer>
@@ -90,13 +89,10 @@ $opal['adminbar'] = array(
       'url'   => 'admin.php',  
        'title' => 'Admin page'
         ),
-
-
   
   ),
   
 
- 
   // This is the callback tracing the current selected menu item base on scriptname
   'callback' => function($url) {
   
