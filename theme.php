@@ -7,12 +7,12 @@
 include(__DIR__.'/config.php'); 
 
 $works = new CArtwork($opal['database']);
-$menu = "";
-$html = $works->ShowAll();
+$menu = $works->ThemeMenu();
+$html = $works->ShowFilteredWorks();
  
 // Do it and store it all in variables in the Opal container.
-$opal['title'] = "Verk";
-$opal['bodyid'] = 'works';
+$opal['title'] = "Teman";
+$opal['bodyid'] = 'theme';
 
  
 $opal['main'] = <<<EOD

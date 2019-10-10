@@ -6,7 +6,9 @@ class CArtwork extends CDatabase {
   private $work;
   private $workinfo;
   private $type;
-  private $view;
+  private $theme;
+  private $filter;
+  private $technique;
   private $editmode;
   private $edititem;
   private $item;
@@ -19,8 +21,10 @@ class CArtwork extends CDatabase {
   $this->edititem = isset($_GET['id']) && isset($this->editmode) ? $_GET['id']: null;
   $this->item = isset($_GET['id']) ? $_GET['id']: null;
   $this->type = isset($_GET['type']) ? $_GET['type']: null;
-  $this->view = isset($_GET['view']) ? $_GET['view']: "workgroup";
-  
+  $this->theme = isset($_GET['theme']) ? $_GET['theme']: null;
+  $this->technique = isset($_GET['technique']) ? $_GET['technique']: null;
+  $this->filter = !isset($_GET['technique']) && !isset($_GET['theme'])? "nofilter" : "filtered";
+    
   }
  
  public function SelectedWorkType($type) {
@@ -30,41 +34,47 @@ class CArtwork extends CDatabase {
  
  }
  
-  public function SelectedViewType($type) {
+ public function SelectedFilter($type) {
  
- $html = ($type == $this->view) ? "class='selected-worktype'" : "";
+ $html = ($type == $this->technique || $type == $this->theme || $type == $this->filter) ? "class='selected-worktype'" : "";
  return $html;
  
  }
  
  public function WorkMenu() {
  
+  $html = "";
+  return $html;	
+ }
+ 
+ 
+  public function ThemeMenu() {
+  	  
+   $this->GetThemePreviews();
+   
+   $themes = $this->works;
    // Starttag meny
    $html = "<div class='workmenu'>";
    
-   //Menyval verk utifrån verkgrupp
-   $html .= "<a href='works.php?view=workgroup'".$this->SelectedViewType('workgroup').">verk</a>";
-   
+   $html .= "<a href='theme.php' ".$this->SelectedFilter("nofilter").">Alla</a> ";
+    
+   foreach($themes as $theme) {
    //Menyval utifrån tema
-   $html .= "<a href='works.php?view=theme'".$this->SelectedViewType('theme').">teman</a>";
+   $html .= "<a href='theme.php?theme={$theme->artcategory}' ".$this->SelectedFilter($theme->artcategory).">{$theme->artcattitle}</a> "; 
+   }
    
+   $this->GetTechniques();
+   $techniques = $this->works;
+   foreach($techniques as $tech) {
    //Menyval utifrån teknik
-	$html .= "<a href='works.php?view=technique'".$this->SelectedViewType('technique').">teknik</a>"; 
+   $html .= "<a href='theme.php?technique={$tech->technique}' ".$this->SelectedFilter($tech->technique).">{$tech->description}</a> "; 
+   }
 	
 	// Endtag meny
    $html .= "</div>";
- 	 
-
-  return $html;
-  	 
- 	 
- //gammal meny baserad på tekniker	 
- /* 
- $html = "<div class='workmenu'><a href='works.php?type=drawing' ".$this->SelectedWorkType('drawing').">Teckningar</a> <a href='works.php?type=inkwashes' ".$this->SelectedWorkType('inkwashes').">Tuschmålningar</a> <a href='works.php?type=watercolor' ".$this->SelectedWorkType('watercolor').">Akvareller</a> <a href='works.php?type=installation' ".$this->SelectedWorkType('installation').">Installation</a></div>";
- return $html;
- */
- }
  
+  return $html;	
+ }
  
   public function GetAllWorks() {
   
@@ -84,6 +94,24 @@ class CArtwork extends CDatabase {
   $this->works = $res;
   
   }
+  
+  public function GetWorksByFilter($theme,$technique) {
+  $sql1 = isset($theme) ? " AND artcategory=?": "";
+  $sql2 = isset($technique) ? " AND technique=?": "";
+  $sql = "SELECT * FROM artwork WHERE public=1{$sql1}{$sql2} ORDER BY year DESC";
+
+  $param1 = isset($theme) ? $theme : null;
+  $param2 = isset($technique) ? $technique : null;
+  $params = isset($param1) && !isset($param2) ? array($param1) : null;
+
+  $params = isset($param2) && !isset($param1) && !isset($params) ? array($param2) : $params;
+
+  $params = isset($param2) && isset($param1) && !isset($params) ? [$param1,$param2] : $params;
+
+  $res = $this->ExecuteSelectQueryAndFetchAll($sql,$params);
+
+  $this->works = $res;
+  }
  
   //funktion som hämtar tumnaglar för verkgrupper ur databasen
   
@@ -95,26 +123,61 @@ class CArtwork extends CDatabase {
   $this->works = $res;
   
   }
+ 
+    //funktion som hämtar tumnaglar för motivkategorier ur databasen
   
-  //hämtar alla verk som hör till en grupp verk
+  public function GetThemePreviews() {
   
+  $sql = "SELECT * FROM artcategory WHERE public=1 ORDER BY artcatsortkey ASC";
+  $res = $this->ExecuteSelectQueryAndFetchAll($sql);
+  
+  $this->works = $res;
+  
+  }
+  
+  
+  public function GetTechniques() {
+  
+  $sql = "SELECT * FROM technique WHERE public=1";
+  $res = $this->ExecuteSelectQueryAndFetchAll($sql);
+  
+  $this->works = $res;
+  
+  }
+  
+  //hämtar alla verk som hör till en grupp verk 
   public function GetWorkGroupWorks($id) {
   $sql = "SELECT * FROM artwork WHERE public=1 AND workgroupcode=?";
+  $params = array($id);
+  $res = $this->ExecuteSelectQueryAndFetchAll($sql,$params);
+  $this->works = $res;  
+  }
+  
+  //hämta information för en verkgrupp
+  public function GetWorkGroupInfo($type) {
+  $sql = "SELECT * FROM workgroup WHERE public=1 AND wgroupcode=?";
+  $params = array($type);
+  $res = $this->ExecuteSelectQueryAndFetchAll($sql,$params);
+  $this->workinfo = $res;  
+  }
+ 
+  
+  //hämta information för en motivkategori
+  public function GetCategoryInfo($type) {
+  $sql = "SELECT * FROM artcategory WHERE public=1 AND artcategory=?";
+  $params = array($type);
+  $res = $this->ExecuteSelectQueryAndFetchAll($sql,$params);
+  $this->workinfo = $res;  
+  }  
+  
+  //hämtar alla verk som hör till en motivkategori  
+  public function GetCategoryWorks($id) {
+  $sql = "SELECT * FROM artwork WHERE public=1 AND artcategory=?";
   $params = array($id);
   $res = $this->ExecuteSelectQueryAndFetchAll($sql,$params);
   $this->works = $res;
   
   }
-  
-  //hämta information för en verkgrupp
-  public function GetWorkGroupInfo($type) {
-  $sql = "SELECT * FROM workgroup WHERE wgroupcode=?";
-  $params = array($type);
-  $res = $this->ExecuteSelectQueryAndFetchAll($sql,$params);
-  $this->workinfo = $res;
-  
-  }
-  
   
   public function GetDrawings() {
   
@@ -186,6 +249,23 @@ class CArtwork extends CDatabase {
   $html .= $this->WorkGroupAsList($this->works);
   break;
   
+  //visa en vald motivkategori med info och verk
+  
+  case "category":
+  $id = $this->item;
+  $this->GetCategoryInfo($id);
+  $this->GetCategoryWorks($id);
+  $html .= $this->CategoryWithInfo($this->workinfo);
+  $html .= $this->WorkgroupAsList($this->works);
+  break;
+  
+  //visa tumnaglar för ingångssida för olika motivkategorier
+  
+  case "theme":
+  $this->GetThemePreviews();
+  $html .= $this->ThemePreview($this->works);
+  break;
+  
   case "drawing":
   $this->GetDrawings();
   $html = $this->WorkAsList($this->works);
@@ -228,6 +308,29 @@ class CArtwork extends CDatabase {
   
   }
 
+  //Visa filtrerbara verk
+  
+  public function ShowFilteredWorks() {
+  
+  $html = "";
+ 
+  if($this->filter == "nofilter") {
+  $this->GetAllWorks();
+  }
+
+  else {
+  $this->GetWorksByFilter($this->theme,$this->technique);
+  }
+  
+  $html .= $this->WorkGroupAsList($this->works);	
+  
+  return $html;
+
+  
+  }
+  
+  
+  
     public function NoWorks() {
   $html = "<p>Välj en kategori.</p>";
   
@@ -242,15 +345,29 @@ class CArtwork extends CDatabase {
   return $html;
   }
   
+  
+  
 //Funktion som ska visa thumbnails för en verkserie. Länken ska leda till en presentationssida som visar verken ur serien. 
 
-    public function WorkPreview($works) {
+  public function WorkPreview($works) {
   $html = "";
   foreach($works as $work) {
       $html .= "<figure class='workpreview'><a href='works.php?type=workgroup&id={$work->wgroupcode}'><img class='workpreview' title='{$work->wgrouptitle}' alt='{$work->wgrouptitle}' src='img.php?src=work/{$work->wgroupimage}&width=600&height=450&crop-to-fit'></a><figcaption class='overlay'>{$work->wgrouptitle}</figcaption></figure>";
   }
   return $html;
   }
+  
+  //Funktion som ska visa thumbnails för en ett visst motivtema. Länken ska leda till en presentationssida som visar alla verk för detta tema. 
+
+  public function ThemePreview($works) {
+  $html = "";
+  foreach($works as $work) {
+      $html .= "<figure class='workpreview'><a href='works.php?type=category&id={$work->artcategory}'><img class='workpreview' title='{$work->artcattitle}' alt='{$work->artcattitle}' src='img.php?src=work/{$work->artcatimage}&width=600&height=450&crop-to-fit'></a><figcaption class='overlay'>{$work->artcattitle}</figcaption></figure>";
+  }
+  return $html;
+  }
+  
+  
   
 //Visa huvudinfo om en grupp med verk ur samma serie
 
@@ -266,7 +383,20 @@ class CArtwork extends CDatabase {
   return $html;
   }
   
-    
+//Visa huvudinfo om en grupp med verk ur samma kategori
+
+  public function CategoryWithInfo($works) {
+  $html = "";
+  foreach($works as $work) {
+      $html = "<h2>{$work->artcattitle}</h2>";
+      //$html .= "<figure class='workpresentation'><img class='workpresentation' title='{$work->wgrouptitle}' alt='{$work->wgrouptitle}' src='img.php?src=work/{$work->wgroupimage}&width=700&height=150&crop-to-fit'><figcaption>";
+      //$html .= "<h4>Om verket:</h4>";
+      $html .= "<div class='workpresentation'>{$work->artcatdesc}</div>";
+      //$html .= "</figcaption></figure>";
+  }
+  return $html;
+  }
+  
 //Visa en grupp med verk ur samma serie
 
   public function WorkGroupAsList($works) {
@@ -276,6 +406,8 @@ class CArtwork extends CDatabase {
   }
   return $html;
   }
+ 
+
   
 //Visa ett enskilt verk med information
   public function WorkWithInfo($works) {
