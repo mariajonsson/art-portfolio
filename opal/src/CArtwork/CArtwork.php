@@ -405,9 +405,7 @@ class CArtwork extends CDatabase {
   	  $this->GetWorkGroupInfo($workgroup);
   	  $wginfo = $this->workinfo;
       $html = "<h3>{$work->worktitle}</h3>";
-      if (isset($workgroup)) {
-      $html .= "<p>Ingår i serien/verket: <a href='works.php?type=workgroup&id={$workgroup}'>{$wginfo[0]->wgrouptitle}</a></p>";
-      }
+      
       $html .= "<figure><img class='workpresentation' title='{$work->worktitle} {$work->year}' alt='{$work->worktitle} {$work->year}' src='img.php?src=work/{$work->workimage}'>
       <figcaption>
       <div class='workdetails'><div class='workdetailsheader'>Titel: </div><div class='workdetailsinfo'>{$work->worktitle} </div></div>
@@ -415,6 +413,9 @@ class CArtwork extends CDatabase {
       <div class='workdetails'><div class='workdetailsheader'>Teknik: </div><div class='workdetailsinfo'>{$work->technique}</div></div>
       <div class='workdetails'><div class='workdetailsheader'>Storlek: </div><div class='workdetailsinfo'>{$work->worksize}</div></div>
       </figcaption></figure>";
+      if (isset($workgroup)) {
+      $html .= "<p>Se alla verk i denna serie: <a href='works.php?type=workgroup&id={$workgroup}'>{$wginfo[0]->wgrouptitle}</a></p>";
+      }
   }
   return $html;
   }
