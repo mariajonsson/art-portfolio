@@ -53,16 +53,18 @@ class CArtwork extends CDatabase {
    $this->GetThemePreviews();
    
    $themes = $this->works;
+   
+   
    // Starttag meny
    $html = "<div class='workmenu'>";
    
-   $html .= "<a href='theme.php' ".$this->SelectedFilter("nofilter").">Alla</a> ";
-    
+   $html .= "<a href='theme.php' ".$this->SelectedFilter("nofilter").">Visa alla</a> ";
+   
    foreach($themes as $theme) {
    //Menyval utifrån tema
    $html .= "<a href='theme.php?theme={$theme->artcategory}' ".$this->SelectedFilter($theme->artcategory).">{$theme->artcattitle}</a> "; 
    }
-   
+ 
    $this->GetTechniques();
    $techniques = $this->works;
    foreach($techniques as $tech) {
@@ -72,7 +74,7 @@ class CArtwork extends CDatabase {
 	
 	// Endtag meny
    $html .= "</div>";
- 
+   //$html .= "<br><a href='theme.php'>x Rensa filter</a><br>";
   return $html;	
  }
  
@@ -98,18 +100,15 @@ class CArtwork extends CDatabase {
   public function GetWorksByFilter($theme,$technique) {
   $sql1 = isset($theme) ? " AND artcategory=?": "";
   $sql2 = isset($technique) ? " AND technique=?": "";
-  $sql = "SELECT * FROM artwork WHERE public=1{$sql1}{$sql2} ORDER BY year DESC";
+  $sql = "SELECT * FROM artwork WHERE public=1{$sql1}{$sql2} ORDER BY technique DESC";
 
   $param1 = isset($theme) ? $theme : null;
   $param2 = isset($technique) ? $technique : null;
   $params = isset($param1) && !isset($param2) ? array($param1) : null;
-
   $params = isset($param2) && !isset($param1) && !isset($params) ? array($param2) : $params;
-
-  $params = isset($param2) && isset($param1) && !isset($params) ? [$param1,$param2] : $params;
+  $params = (isset($param2) && isset($param1) && (!isset($params))) ? array($param1,$param2) : $params;
 
   $res = $this->ExecuteSelectQueryAndFetchAll($sql,$params);
-
   $this->works = $res;
   }
  
@@ -155,10 +154,11 @@ class CArtwork extends CDatabase {
   
   //hämta information för en verkgrupp
   public function GetWorkGroupInfo($type) {
-  $sql = "SELECT * FROM workgroup WHERE public=1 AND wgroupcode=?";
+  $sql = "SELECT * FROM workgroup WHERE wgroupcode=?";
   $params = array($type);
   $res = $this->ExecuteSelectQueryAndFetchAll($sql,$params);
-  $this->workinfo = $res;  
+  $this->workinfo = $res; 
+  
   }
  
   
@@ -179,50 +179,7 @@ class CArtwork extends CDatabase {
   
   }
   
-  public function GetDrawings() {
   
-  $sql = "SELECT * FROM artwork WHERE public=1 AND (technique='blyerts' OR technique='tuschteckning') ORDER BY year DESC";
-  $res = $this->ExecuteSelectQueryAndFetchAll($sql);
-  
-  $this->works = $res;
-  
-  }
-  
-  public function GetPaintings() {
-  
-  $sql = "SELECT * FROM artwork WHERE public=1 AND (technique='akvarell' OR technique='olja' OR technique='tuschlavering') ORDER BY year DESC";
-  $res = $this->ExecuteSelectQueryAndFetchAll($sql);
-  
-  $this->works = $res;
-  
-  }
-  
-  public function GetWatercolor() {
-  
-  $sql = "SELECT * FROM artwork WHERE public=1 AND (technique='akvarell') ORDER BY year DESC";
-  $res = $this->ExecuteSelectQueryAndFetchAll($sql);
-  
-  $this->works = $res;
-  
-  }
-  
-  public function GetInkwashes() {
-  
-  $sql = "SELECT * FROM artwork WHERE public=1 AND (technique='tuschlavering') ORDER BY year DESC";
-  $res = $this->ExecuteSelectQueryAndFetchAll($sql);
-  
-  $this->works = $res;
-  
-  }
-  
-    public function GetInstallations() {
-  
-  $sql = "SELECT * FROM artwork WHERE public=1 AND (technique='installation') ORDER BY year DESC";
-  $res = $this->ExecuteSelectQueryAndFetchAll($sql);
-  
-  $this->works = $res;
-  
-  }
   
   public function ShowAll() {
   
@@ -237,7 +194,7 @@ class CArtwork extends CDatabase {
   //visa ett enskilt verk
   case "single":
   $this->GetWork($this->item);
-  $html .= $this->WorkAsList($this->works);
+  $html .= $this->WorkWithInfo($this->works);
   break;
   
   //visa en vald verkgrupp, hämta info och visa överst, visa sedan alla verk
@@ -322,7 +279,7 @@ class CArtwork extends CDatabase {
   $this->GetWorksByFilter($this->theme,$this->technique);
   }
   
-  $html .= $this->WorkGroupAsList($this->works);	
+  $html .= $this->ShowGallery($this->works);	
   
   return $html;
 
@@ -380,6 +337,7 @@ class CArtwork extends CDatabase {
       $html .= "<div class='workpresentation'>{$work->wgroupdescription}</div>";
       //$html .= "</figcaption></figure>";
   }
+  
   return $html;
   }
   
@@ -406,14 +364,57 @@ class CArtwork extends CDatabase {
   }
   return $html;
   }
- 
+//Visa ett gallery med tumnaglar
+
+  public function ShowGallery($works) {
+  	  
+  	  $htmlcols = "";
+  	  $workcols = array(
+  	  	  "col-4" => "",
+  	  	  "col-1" => "",
+  	  	  "col-2" => "",
+  	  	  "col-3" => "",
+  	  	  "col-5" => "",
+  	  	  "col-6" => "");
+  	  $numworks = count($works);
+  	  
+	for ($n = 1; $n <= $numworks; $n+=6) {	
+		$col = 1;
+	  	for ($i = $n; $i < ($n+6) && $i <= $numworks; $i++) {
+	  	  
+          $workcols["col-".$col] .= "<figure class='gallery-collage'><a href='works.php?type=single&id={$works[$i-1]->workid}'><img class='gallery-collage' title='{$works[$i-1]->worktitle}' alt='{$works[$i-1]->worktitle}' src='img.php?src=work/{$works[$i-1]->workimage}'></a></figure>";
+          
+          $col++;
+	  	} 
+	} 
+	
+	$colnum = 0;
+	foreach ($workcols as $col) {
+	  $colnum++;
+	  $htmlcols .= "<div class='gallery-collage' id='gallery-col-".$colnum."'>{$col}</div>";		
+	}
+	  	  
+  return $htmlcols;
+  } 
 
   
 //Visa ett enskilt verk med information
   public function WorkWithInfo($works) {
   foreach($works as $work) {
-      $html = "<h2>{$work->worktitle}</h2>";
-      $html .= "<figure><img class='work' title='{$work->worktitle} {$work->year}' alt='{$work->worktitle} {$work->year}' src='img.php?src=work/{$work->workimage}'><figcaption>Titel: {$work->worktitle} <br>År: {$work->year}<br>Teknik: {$work->technique}<br>Storlek: {$work->worksize}</figcaption></figure>";
+  	  $workgroup = $work->workgroupcode;
+  	  $this->GetWorkGroupInfo($workgroup);
+  	  $wginfo = $this->workinfo;
+      $html = "<h3>{$work->worktitle}</h3>";
+      if (isset($workgroup)) {
+      $html .= "<p>Ingår i serien/verket: <a href='works.php?type=workgroup&id={$workgroup}'>{$wginfo[0]->wgrouptitle}</a></p>";
+      }
+      $html .= "<figure><img class='workpresentation' title='{$work->worktitle} {$work->year}' alt='{$work->worktitle} {$work->year}' src='img.php?src=work/{$work->workimage}'>
+      <figcaption>
+      <div class='workdetails'><div class='workdetailsheader'>Titel: </div><div class='workdetailsinfo'>{$work->worktitle} </div></div>
+      <div class='workdetails'><div class='workdetailsheader'>År: </div><div class='workdetailsinfo'>{$work->year}</div></div>
+      <div class='workdetails'><div class='workdetailsheader'>Teknik: </div><div class='workdetailsinfo'>{$work->technique}</div></div>
+      <div class='workdetails'><div class='workdetailsheader'>Storlek: </div><div class='workdetailsinfo'>{$work->worksize}</div></div>
+      </figcaption></figure>";
   }
   return $html;
   }

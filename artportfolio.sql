@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Värd: localhost:3306
--- Tid vid skapande: 06 okt 2019 kl 01:25
+-- Tid vid skapande: 10 okt 2019 kl 14:00
 -- Serverversion: 5.6.26
 -- PHP-version: 5.5.30
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Databas: `artportfolio`
 --
-CREATE DATABASE IF NOT EXISTS `artportfolio` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `artportfolio`;
 
 -- --------------------------------------------------------
 
@@ -30,22 +28,25 @@ USE `artportfolio`;
 
 CREATE TABLE IF NOT EXISTS `artcategory` (
   `artcategory` varchar(30) COLLATE utf8_swedish_ci NOT NULL,
-  `artcatttitle` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci DEFAULT NULL,
-  `artcatdesc` text COLLATE utf8_swedish_ci
+  `artcattitle` varchar(30) COLLATE utf8_swedish_ci DEFAULT NULL,
+  `artcatdesc` text COLLATE utf8_swedish_ci,
+  `artcatimage` varchar(50) COLLATE utf8_swedish_ci DEFAULT NULL,
+  `artcatsortkey` int(11) DEFAULT '99',
+  `public` tinyint(4) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Dumpning av Data i tabell `artcategory`
 --
 
-INSERT INTO `artcategory` (`artcategory`, `artcatttitle`, `artcatdesc`) VALUES
-('abstrakt', 'Abstrakt', NULL),
-('interiör', 'Interiörer', NULL),
-('kristall', 'Kristaller och mineraler', NULL),
-('landskap', 'Landskap', NULL),
-('materia', 'Materia', NULL),
-('skog', 'Skog och träd', NULL),
-('urban', 'Stadsmiljöer', NULL);
+INSERT INTO `artcategory` (`artcategory`, `artcattitle`, `artcatdesc`, `artcatimage`, `artcatsortkey`, `public`) VALUES
+('abstrakt', 'Abstrakt', NULL, 'Triptyk-del3-2017.jpg', 99, 0),
+('interiör', 'Interiörer', NULL, 'undisclosed-inquiry-h-700px.jpg', 99, 1),
+('kristall', 'Kristaller och mineraler', NULL, 'rred1-700-crop.jpg', 99, 1),
+('landskap', 'Landskap', NULL, NULL, 99, 0),
+('materia', 'Materia', NULL, 'Triptyk-del1-2017.jpg', 99, 1),
+('skog', 'Skog och träd', NULL, 'pencil_corylus_1_700.jpg', 99, 1),
+('urban', 'Stadsmiljöer', NULL, 'painting_bararegn_700.jpg', 99, 0);
 
 -- --------------------------------------------------------
 
@@ -64,36 +65,38 @@ CREATE TABLE IF NOT EXISTS `artwork` (
   `public` tinyint(1) DEFAULT NULL,
   `workgroupcode` varchar(30) COLLATE utf8_swedish_ci DEFAULT NULL,
   `artcategory` varchar(30) COLLATE utf8_swedish_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Dumpning av Data i tabell `artwork`
 --
 
 INSERT INTO `artwork` (`workid`, `worktitle`, `technique`, `worksize`, `workdescription`, `workimage`, `year`, `public`, `workgroupcode`, `artcategory`) VALUES
-(1, 'Corylus I', 'blyerts', '66 cm x 44,5 cm', 'Teckning i blyerts.', 'pencil_corylus_1_700.jpg', 2011, 1, NULL, 'skog'),
+(1, 'Corylus I', 'blyerts', '66 cm x 44,5 cm', 'Teckning i blyerts.', 'pencil_corylus_1_700.jpg', 2011, 1, 'corylus', 'skog'),
 (2, 'Det är bara regn', 'tuschlavering', NULL, 'Förlaga till omslagsbild till boken "Det är bara regn".', 'painting_bararegn_700.jpg', 2011, 1, NULL, 'urban'),
-(3, 'Corylus II', 'blyerts', '66 cm x 44,5 cm', 'Teckning i blyerts', 'pencil_corylus_2_700.jpg', 2011, 1, NULL, 'skog'),
+(3, 'Corylus II', 'blyerts', '66 cm x 44,5 cm', 'Teckning i blyerts', 'pencil_corylus_2_700.jpg', 2011, 1, 'corylus', 'skog'),
 (4, 'Forestial', 'blyerts', '42 cm x 14 cm', 'Blyertsteckningar i bok.', 'forestial-1-700.jpg', 2008, 1, 'forestial', 'skog'),
 (5, 'Forestial', 'blyerts', '42 cm x 14 cm', 'Blyertsteckningar i bok.', 'forestial-1-700.jpg', 2008, 1, 'forestial', 'skog'),
 (6, 'Undisclosed Inquiry', 'tuschlavering', NULL, 'Tuschlavering.', 'interior_1_700.jpg', 2014, 1, 'undisclosed', 'interiör'),
 (7, 'Undisclosed Inquiry', 'tuschlavering', NULL, 'Tuschlavering.', 'interior_2_700.jpg', 2014, 1, 'undisclosed', 'interiör'),
-(8, 'Primary Colors: Emerald', 'akvarell', '24 cm x 24 cm', 'Akvarell del i serien Primary Colors. Utsmyckning på Oskarshamns sjukhus.', 'green2-700-crop.jpg', 2012, 1, NULL, 'kristall'),
-(9, 'Primary Colors: Ruby', 'akvarell', '24 cm x 24 cm', 'Akvarell del i serien Primary Colors. Utsmyckning på Oskarshamns sjukhus.', 'rred1-700-crop.jpg', 2012, 1, NULL, 'kristall'),
-(10, 'Primary Colors: Mimetite', 'akvarell', '24 cm x 24 cm', 'Akvarell del i serien Primary Colors. Utsmyckning på Oskarshamns sjukhus.', 'yellow1-700-crop.jpg', 2012, 1, NULL, 'kristall'),
-(11, 'Primary Colors: Amethyst', 'akvarell', '24 cm x 24 cm', 'Akvarell del i serien Primary Colors. Utsmyckning på Oskarshamns sjukhus.', 'violet1-700-crop.jpg', 2012, 1, NULL, 'kristall'),
+(8, 'Primary Colors: Emerald', 'akvarell', '24 cm x 24 cm', 'Akvarell del i serien Primary Colors. Utsmyckning på Oskarshamns sjukhus.', 'green2-700-crop.jpg', 2012, 1, 'materia', 'kristall'),
+(9, 'Primary Colors: Ruby', 'akvarell', '24 cm x 24 cm', 'Akvarell del i serien Primary Colors. Utsmyckning på Oskarshamns sjukhus.', 'rred1-700-crop.jpg', 2012, 1, 'materia', 'kristall'),
+(10, 'Primary Colors: Mimetite', 'akvarell', '24 cm x 24 cm', 'Akvarell del i serien Primary Colors. Utsmyckning på Oskarshamns sjukhus.', 'yellow1-700-crop.jpg', 2012, 1, 'materia', 'kristall'),
+(11, 'Primary Colors: Amethyst', 'akvarell', '24 cm x 24 cm', 'Akvarell del i serien Primary Colors. Utsmyckning på Oskarshamns sjukhus.', 'violet1-700-crop.jpg', 2012, 1, 'materia', 'kristall'),
 (12, 'Undisclosed Inquiry', 'tuschlavering', NULL, 'Tuschlavering. Del i serien Undisclosed Inquiry.', 'interior_3_700.jpg', 2014, 1, 'undisclosed', 'interiör'),
 (13, 'Undisclosed Inquiry', 'tuschlavering', NULL, 'Tuschlavering. Del i serien Undisclosed Inquiry.', 'interior_4_700.jpg', 2014, 1, 'undisclosed', 'interiör'),
-(14, 'Primary Colors', 'akvarell', '24 cm x 24 cm', '4 akvareller.', 'primary_700.jpg', 2012, 1, NULL, 'kristall'),
+(14, 'Primary Colors', 'akvarell', '24 cm x 24 cm', '4 akvareller.', 'primary_700.jpg', 2012, 1, 'materia', 'kristall'),
 (15, 'Naturalis Historia', 'akvarell', '14 cm x 21 cm', 'Moon, Foliage, Roots', 'moon-foliage-roots-700.jpg', 2011, 1, 'naturalishistoria', 'skog'),
-(17, 'Where A Million Rhinestones Sit And Cry', 'installation', NULL, 'Installation med objekt, ljus och musik. Plats: Rotundan, Kalmar.', 'rhinestones-1.jpg', 2011, 1, 'undisclosed', 'interiör'),
+(17, 'Where A Million Rhinestones Sit And Cry', 'installation', NULL, 'Installation med objekt, ljus och musik. Plats: Rotundan, Kalmar.', 'rhinestones-1.jpg', 2011, 1, 'rhinestones', 'kristall'),
 (18, 'Where A Million Rhinestones Sit And Cry', 'installation', NULL, 'Installation med objekt, ljus och musik. Plats: Rotundan, Kalmar.', 'rhinestones-2.jpg', 2011, 1, 'rhinestones', 'kristall'),
 (19, 'Where A Million Rhinestones Sit And Cry', 'installation', NULL, 'Installation med objekt, ljus och musik. Plats: Rotundan, Kalmar.', 'rhinestones-3.jpg', 2011, 1, 'rhinestones', 'kristall'),
 (20, 'Where A Million Rhinestones Sit And Cry', 'installation', NULL, 'Installation med objekt, ljus och musik. Plats: Rotundan, Kalmar.', 'rhinestones-4.jpg', 2011, 1, 'rhinestones', 'kristall'),
 (21, 'Undisclosed Inquiry (E)', 'tuschlavering', '28 cm x 20 cm', 'Tuschlavering. Del i serien Undisclosed Inquiry.', 'interior-6-dressingroom-700.jpg', 2016, 1, 'undisclosed', 'interiör'),
 (22, 'Undisclosed Inquiry (F)', 'tuschlavering', '28 cm x 20 cm', NULL, 'undisclosed_inquiry_f_700px.jpg', 2016, 1, 'undisclosed', 'interiör'),
 (23, 'Undisclosed Inquiry (G)', 'tuschlavering', '28 cm x 20 cm', NULL, 'undisclosed-inquiry-g-700px.jpg', 2016, 1, 'undisclosed', 'interiör'),
-(24, 'Undisclosed Inquiry (H)', 'tuschlavering', '28 cm x 20 cm', NULL, 'undisclosed-inquiry-h-700px.jpg', 2016, 1, 'undisclosed', 'interiör');
+(24, 'Undisclosed Inquiry (H)', 'tuschlavering', '28 cm x 20 cm', NULL, 'undisclosed-inquiry-h-700px.jpg', 2016, 1, 'undisclosed', 'interiör'),
+(25, 'Parts of the Forest', 'blyerts', NULL, NULL, 'W_grenar-04.jpg', NULL, 1, 'partsoftheforest', 'skog'),
+(26, 'Unknown Matters', 'blandteknik', NULL, NULL, 'Triptyk-del2-2017.jpg', 2017, 1, 'unknownmatter', 'materia');
 
 -- --------------------------------------------------------
 
@@ -213,24 +216,25 @@ INSERT INTO `cvitem` (`itemid`, `description`, `year1`, `year2`, `weight`, `item
 
 CREATE TABLE IF NOT EXISTS `technique` (
   `technique` varchar(30) COLLATE utf8_swedish_ci NOT NULL,
-  `description` text COLLATE utf8_swedish_ci
+  `description` text COLLATE utf8_swedish_ci,
+  `public` tinyint(4) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Dumpning av Data i tabell `technique`
 --
 
-INSERT INTO `technique` (`technique`, `description`) VALUES
-('akryl', 'Akrylmålningar'),
-('akvarell', 'Akvareller'),
-('blandteknik', 'Blandtekniker'),
-('blyerts', 'Blyertsteckningar'),
-('installation', 'Installation'),
-('olja', 'Oljemålningar'),
-('skulptur', 'Skulptur'),
-('tusch', 'Tusch'),
-('tuschlavering', 'Tuschlaveringar'),
-('tuschteckning', 'Tuschteckningar');
+INSERT INTO `technique` (`technique`, `description`, `public`) VALUES
+('akryl', 'Akrylmålningar', 0),
+('akvarell', 'Akvareller', 1),
+('blandteknik', 'Blandtekniker', 0),
+('blyerts', 'Blyertsteckningar', 1),
+('installation', 'Installation', 1),
+('olja', 'Oljemålningar', 0),
+('skulptur', 'Skulptur', 0),
+('tusch', 'Tusch', 1),
+('tuschlavering', 'Tuschlaveringar', 1),
+('tuschteckning', 'Tuschteckningar', 1);
 
 -- --------------------------------------------------------
 
@@ -266,18 +270,23 @@ CREATE TABLE IF NOT EXISTS `workgroup` (
   `wgrouptitle` varchar(40) COLLATE utf8_swedish_ci NOT NULL,
   `wgroupdescription` text COLLATE utf8_swedish_ci,
   `wgroupimage` varchar(30) COLLATE utf8_swedish_ci DEFAULT NULL,
-  `wgroupsortkey` int(11) DEFAULT '99'
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+  `wgroupsortkey` int(11) DEFAULT '99',
+  `public` tinyint(4) DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Dumpning av Data i tabell `workgroup`
 --
 
-INSERT INTO `workgroup` (`wgroupid`, `wgroupcode`, `wgrouptitle`, `wgroupdescription`, `wgroupimage`, `wgroupsortkey`) VALUES
-(1, 'forestial', 'Forestial', NULL, NULL, 99),
-(3, 'naturalishistoria', 'Naturalis Historia', NULL, NULL, 99),
-(4, 'rhinestones', 'Where A Million Rhinestones Sit And Cry', NULL, NULL, 99),
-(2, 'undisclosed', 'Undisclosed Inquiry', NULL, NULL, 99);
+INSERT INTO `workgroup` (`wgroupid`, `wgroupcode`, `wgrouptitle`, `wgroupdescription`, `wgroupimage`, `wgroupsortkey`, `public`) VALUES
+(6, 'corylus', 'Corylus', NULL, 'pencil_corylus_1_700.jpg', 19, 0),
+(1, 'forestial', 'Forestial', NULL, 'forestial-1-700.jpg', 20, 0),
+(5, 'materia', 'Untitled project', NULL, 'rred1-700-crop.jpg', 80, 0),
+(3, 'naturalishistoria', 'Naturalis Historia', NULL, 'moon-thumb.jpg', 30, 0),
+(7, 'partsoftheforest', 'Parts of the Forest', NULL, 'W_grenar-04.jpg', 28, 0),
+(4, 'rhinestones', 'Where A Million Rhinestones Sit And Cry', NULL, 'rhinestones-1.jpg', 70, 0),
+(2, 'undisclosed', 'Undisclosed Inquiry', '<p>Interiörerna i Undisclosed Inquiry skildrar rum, exempel sovrum, arbetsrum, sällskapsrum; platser för avskilt eget arbete, privata samtal eller vila. Inga personer syns i bilderna. Utan aktörer kan man bara anta, eller ana, att något kommer att ske här - eller att något redan har utspelat sig här.</p>\r\n\r\n<p>Interiörerna på bilderna är från början filmkulisser - de förekommer som bakgrunder i en serie stumfilmer. Filmerna är filmatiseringar av en serie kriminalromaner som handlar om ett mystiskt kriminellt geni och en polis som försöker fånga honom. Återkommande teman i filmerna och böckerna är det dolda, hemliga, svårfångade och oförklarliga. Titeln Undisclosed Inquiry antyder en utredning eller ett utforskande. Men också tystnad - att information inte har delgetts. Vilka som utför utredningen, eller vad som är föremål för undersökningen avslöjas inte av titeln eller bilden.\r\n</p>', 'interior_2_700.jpg', 10, 0),
+(8, 'unknownmatter', 'Unknown Matter', NULL, 'Triptyk-del2-2017.jpg', 90, 0);
 
 --
 -- Index för dumpade tabeller
@@ -351,7 +360,7 @@ ALTER TABLE `workgroup`
 -- AUTO_INCREMENT för tabell `artwork`
 --
 ALTER TABLE `artwork`
-  MODIFY `workid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
+  MODIFY `workid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT för tabell `content`
 --
@@ -376,7 +385,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT för tabell `workgroup`
 --
 ALTER TABLE `workgroup`
-  MODIFY `wgroupid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `wgroupid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- Restriktioner för dumpade tabeller
 --

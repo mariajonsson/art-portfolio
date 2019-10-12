@@ -143,6 +143,13 @@ $opal['navbar'] = array(
       'title' => 'Verk'
     ),
     
+            // This is a menu item
+    'theme'  => array(
+      'text'  =>'teman',   
+      'url'   =>'theme.php',  
+      'title' => 'Teman'
+    ),
+    
     // This is a menu item
     'cv'  => array(
       'text'  =>'cv',   

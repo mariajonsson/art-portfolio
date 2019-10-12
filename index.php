@@ -6,8 +6,8 @@
 // Include the essential config-file which also creates the $opal variable with its defaults.
 include(__DIR__.'/config.php'); 
  
-$content = new CContent($opal['database']);
-$html = $content->ShowPage("index"); 
+$works = new CArtwork($opal['database']);
+$html = $works->ShowAll(); 
 // Do it and store it all in variables in the Opal container.
 $opal['title'] = "Maria Jonsson";
 $opal['bodyid'] = 'index';
